@@ -63,7 +63,7 @@
     rails db:create
     rails s
     ```
-* ブラウザから(https://summer2022.intern.local/static_pages/home)にアクセス
+* ブラウザから( https://summer2022.intern.local/static_pages/home )にアクセス
     * chromeだと証明書で弾かれる可能性あり
 
 
