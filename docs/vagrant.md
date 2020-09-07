@@ -59,6 +59,7 @@
 * rails 起動
     * (satori_intern_2022)下記コマンドを入力
     ```
+    bundle install --path vendor/bundle
     rails yarn:install
     rails db:create
     rails s
@@ -73,3 +74,10 @@
         * (参考)デフォルトインストールディレクトリ: `C:\Program Files\Oracle\VirtualBox`
 2. GitHubでssh接続
     * https://qiita.com/shizuma/items/2b2f873a0034839e47ce
+3. bundle installが進まない
+   * ipv6無効にする必要があり
+   ```
+   sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+   sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+   sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
+   ```
