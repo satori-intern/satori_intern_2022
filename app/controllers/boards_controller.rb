@@ -2,37 +2,36 @@ class BoardsController < ApplicationController
     protect_from_forgery with: :null_session
 
     # show boards list
-    def home
+    def index
         @boards = Board.all
     end
 
     # create board
-    def create_page
+    def new
     end
+
     def create
         board = Board.create(name: params[:name])
-        redirect_to :action => 'home'
+        redirect_to :action => 'index'
     end
 
     # edit board
-    def edit_page
+    def edit
         @board = Board.find(params[:id])
     end
-    def edit
+
+    def update
         board = Board.find(params[:id])
         board.name = params[:name]
         board.save
-        redirect_to :action => 'home'
+        redirect_to :action => 'index'
     end
 
     # destroy board
-    def destroy_page
-        @board = Board.find(params[:id])
-    end
     def destroy
         board = Board.find(params[:id])
         board.destroy
-        redirect_to :action => 'home'
+        redirect_to :action => 'index'
     end
 
     # show page

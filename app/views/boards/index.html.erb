@@ -7,10 +7,10 @@
       <%= link_to("edit", "/boards/#{board.id}/edit" ) %>
     </span>
     <span>
-      <%= link_to("destroy", "/boards/#{board.id}/destroy" ) %>
+      <%= button_to("destroy", "/boards/#{board.id}/destroy", method: :delete) %>
     </span>
   </div>
 <% end %>
 <div>
-  <%= link_to("create", "/boards/create") %>
+  <%= link_to("new", "/boards/new") %>
 </div>
