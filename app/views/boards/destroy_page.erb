@@ -1,6 +1,5 @@
 <h1><%= @board.name %>の削除</h1>
 <%= form_tag(controller: "boards", action: "destroy", method: "post") do %>
-    <%= hidden_field_tag(:id, @board.id) %>
     <%= submit_tag("Destroy") %>
 <% end %>
 <%= yield %>

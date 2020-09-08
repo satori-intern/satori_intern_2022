@@ -35,6 +35,11 @@ class BoardsController < ApplicationController
         redirect_to :action => 'home'
     end
 
+    # show page
+    def show
+        @board = Board.find(params[:id])
+    end
+
     # API: get_board_data
     def get_board_data
         id = params[:id]

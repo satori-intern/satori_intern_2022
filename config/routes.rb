@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post "boards/:id/edit"    => "boards#edit"
   get  "boards/:id/destroy" => "boards#destroy_page"
   post "boards/:id/destroy" => "boards#destroy"
+  get  "boards/:id/show"    => "boards#show"
 
   post "boards/get_board_data", "boards#get_board_data"
 
