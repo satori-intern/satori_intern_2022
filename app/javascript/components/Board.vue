@@ -1,6 +1,6 @@
 <template>
   <div class="bg-info">
-    <h4>{{board.board_name}}</h4>
+    <h3 class="text-light p-1">{{board.board_name}}</h3>
     <div class="container p-1">
       <div class="row">
         <div
