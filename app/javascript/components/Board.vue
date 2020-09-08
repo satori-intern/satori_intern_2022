@@ -3,15 +3,15 @@
     <h3 class="text-light p-1">{{board.board_name}}</h3>
     <div class="container p-1">
       <div class="row">
-        <div
-          class="col-12 col-md-4 col-lg-3"
-          v-for="(list, key) in board.lists"
-          :key="key"
-        >
-          <List :items="list.items" :list_title="list.name" />
+        <div class="col-12 col-md-4 col-lg-3" v-for="(list, key) in board.lists" :key="key">
+          <List :list-items="list.items" :list-title="list.name" />
         </div>
         <div class="col-12 col-md-4 col-lg-3">
-          <button type="button" class="btn btn-outline-light d-flex align-self-center">
+          <button
+            type="button"
+            class="btn btn-outline-light d-flex align-self-center"
+            @click="addList"
+          >
             <span class="material-icons">add</span> リストを追加する
           </button>
         </div>
@@ -25,6 +25,9 @@ import List from "./List";
 
 export default {
   name: "Board",
+  methods: {
+    addList: function () {},
+  },
   data() {
     return {
       board: {
