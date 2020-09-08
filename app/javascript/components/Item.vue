@@ -8,10 +8,6 @@
         </button>
       </div>
     </div>
-    <p v-if="showModal" :item_="item_">
-      <input v-model="item_.name" />
-    </p>
-    <!-- dummy -->
   </div>
 </template>
 
