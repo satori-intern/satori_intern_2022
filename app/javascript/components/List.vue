@@ -2,8 +2,8 @@
 <div class="card">
     <div class="card-body bg-light">
         <h4 class="card-title">{{title}}</h4>
-        <draggable v-model="Items" :key="listId" group="board" @end="moveItem">
-            <div v-for="item in Items" :key="item.id">
+        <draggable v-model="items" :key="listId" group="board" @end="moveItem">
+            <div v-for="item in items" :key="item.id">
                 <Item :item-item="item" />
             </div>
         </draggable>
@@ -42,10 +42,13 @@ export default {
     data() {
         return {
             title: this.listTitle,
-            Items: this.listItems,
+            items: this.listItems,
             listId: this.id,
         };
     },
+    // watch: {
+    //     this.items
+    // },
     methods: {
         moveItem: function (event) {
             console.log(event);
