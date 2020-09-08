@@ -1,8 +1,42 @@
 class BoardsController < ApplicationController
-    # CSRF invalidation
-    protect_from_forgery except: :some_action
-    protect_from_forgery except: [:some_action1, :some_action2]
-    
+    protect_from_forgery with: :null_session
+
+    # show boards list
+    def home
+        @boards = Board.all
+    end
+
+    # create board
+    def create_page
+    end
+    def create
+        board = Board.new({name: params[:name]})
+        board.save
+        redirect_to :action => 'home'
+    end
+
+    # edit board
+    def edit_page
+        @board = Board.find(params[:id])
+    end
+    def edit
+        board = Board.find(params[:id])
+        board.name = params[:name]
+        board.save
+        redirect_to :action => 'home'
+    end
+
+    # destroy board
+    def destroy_page
+        @board = Board.find(params[:id])
+    end
+    def destroy
+        board = Board.find(params[:id])
+        board.destroy
+        redirect_to :action => 'home'
+    end
+
+    # API: get_board_data
     def get_board_data
         id = params[:id]
         board = Board.find(id)

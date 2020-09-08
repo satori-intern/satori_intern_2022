@@ -1,0 +1,7 @@
+<%= form_tag(controller: "boards", action: "edit", method: "post") do %>
+    <%= label_tag(:name, "Board Name:") %>
+    <%= text_field_tag(:name, @board.name) %>
+    <%= hidden_field_tag(:id, @board.id) %>
+    <%= submit_tag("Save") %>
+<% end %>
+<%= yield %>
