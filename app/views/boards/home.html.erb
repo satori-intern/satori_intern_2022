@@ -1,7 +1,7 @@
 <% @boards.each do |board| %>
   <div>
     <span>
-      <%= board.name %>
+      <%= link_to(board.name, "/boards/#{board.id}/show" ) %>
     </span>
     <span>
       <%= link_to("edit", "/boards/#{board.id}/edit" ) %>
