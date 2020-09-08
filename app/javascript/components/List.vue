@@ -1,8 +1,8 @@
 <template>
   <div class="card">
     <div class="card-body bg-light">
-      <h4 class="card-title">{{list_title}}</h4>
-      <div v-for="(item, key) in items" :key="key">
+      <h4 class="card-title">{{listTitle}}</h4>
+      <div v-for="(item, key) in items_" :key="key">
         <p><Item :item="item" /></p>
       </div>
       <button type="button" class="btn btn-outline-info d-flex align-self-center"><span class="material-icons">add</span> アイテムを追加</button>
@@ -17,17 +17,21 @@ export default {
   name: "List",
   props: {
     list_title: {
-      type: String,
-      default: "list_title",
+      type: String
     },
     items: {
-      type: Array,
-      default: ["items"],
+      type: Array
     },
   },
   components: {
     Item,
   },
+  data() {
+    return {
+      listTitle: this.list_title,
+      items_: this.items
+    }
+  }
 };
 </script>
 
