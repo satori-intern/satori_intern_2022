@@ -4,15 +4,27 @@
     <div class="container p-1">
       <div class="row">
         <div class="col-12 col-md-4 col-lg-3" v-for="(list, key) in board.lists" :key="key">
-          <List :list-items="list.items" :list-title="list.name" />
+          <List :list-items="list.items" :list-title="list.name" :list-id="list.id" />
         </div>
         <div class="col-12 col-md-4 col-lg-3">
           <button
             type="button"
             class="btn btn-outline-light d-flex align-self-center"
+            @click="switchAddList"
           >
             <span class="material-icons">add</span> リストを追加する
           </button>
+          <div class="input-group" v-if="showAddList">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="リスト名"
+              v-model="newListName"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" @click="addList">追加</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,8 +36,27 @@ import List from "./List";
 
 export default {
   name: "Board",
+  methods: {
+    switchAddList: function () {
+      this.showAddList = this.showAddList ? false : true;
+    },
+    addList: function() {
+      const addBoardId = 0 //location.pathname.replace()でとる？
+      const newListName = this.newListName
+      const newListId = 0 // axiosで取得する
+      const newList = {
+        id: newListId,
+        name: newListName,
+        items: []
+      }
+      this.board.lists.push(newList)
+      this.showAddList = false
+    }
+  },
   data() {
     return {
+      newListName: "",
+      showAddList: false,
       board: {
         board_name: "イルカ",
         lists: [
