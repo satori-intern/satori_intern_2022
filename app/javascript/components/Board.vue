@@ -25,9 +25,6 @@ import List from "./List";
 
 export default {
   name: "Board",
-  methods: {
-    addList: function () {},
-  },
   data() {
     return {
       board: {
