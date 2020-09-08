@@ -10,7 +10,6 @@
           <button
             type="button"
             class="btn btn-outline-light d-flex align-self-center"
-            @click="addList"
           >
             <span class="material-icons">add</span> リストを追加する
           </button>
