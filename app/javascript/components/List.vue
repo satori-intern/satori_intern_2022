@@ -1,10 +1,10 @@
 <template>
 <div class="card">
     <div class="card-body bg-light">
-        <h4 class="card-title">{{list_title}}</h4>
-        <draggable v-model="listItems" :key="listId" group="board" @end="moveItem">
-            <div v-for="item in listItems" :key="item.id">
-                <Item :item="item" />
+        <h4 class="card-title">{{title}}</h4>
+        <draggable v-model="Items" :key="listId" group="board" @end="moveItem">
+            <div v-for="item in Items" :key="item.id">
+                <Item :item-item="item" />
             </div>
         </draggable>
         <button type="button" class="btn btn-outline-info d-flex align-self-center">
@@ -28,7 +28,7 @@ export default {
             type: String,
             default: "",
         },
-        items: {
+        listItems: {
             type: Array,
             default: () => {
                 return [];
@@ -41,8 +41,8 @@ export default {
     },
     data() {
         return {
-            list_title: this.listTitle,
-            listItems: this.items,
+            title: this.listTitle,
+            Items: this.listItems,
             listId: this.id,
         };
     },

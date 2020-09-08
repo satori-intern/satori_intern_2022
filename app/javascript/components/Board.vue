@@ -5,7 +5,7 @@
         <div class="row">
             <draggable v-model="board.lists" group="lists" class="col-12 col-md-4 col-lg-3" v-for="list in board.lists" :key="list.id">
                 <div>
-                    <List :items="list.items" :listTitle="list.name" :id="list.id" />
+                    <List :list-items="list.items" :list-title="list.name" :id="list.id" />
                 </div>
             </draggable>
             <div class="col-12 col-md-4 col-lg-3">
