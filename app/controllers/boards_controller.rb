@@ -10,8 +10,7 @@ class BoardsController < ApplicationController
     def create_page
     end
     def create
-        board = Board.new({name: params[:name]})
-        board.save
+        board = Board.create(name: params[:name])
         redirect_to :action => 'home'
     end
 
