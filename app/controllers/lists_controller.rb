@@ -60,7 +60,7 @@ class ListsController < ApplicationController
                 .update_all('`index` = `index` + 1')
             from_list.index = to_index + 1
         else
-            List.where('`board_id` = ?', to_list_id)
+            List.where('`board_id` = ?', board_id)
                 .where('? < `index`', from_index)
                 .where('`index` <= ?', to_index)
                 .update_all('`index` = `index` - 1')
