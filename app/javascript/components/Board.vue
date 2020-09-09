@@ -30,8 +30,8 @@ export default {
     draggable,
   },
   mounted() {
-    const boardId = location.pathname.split("/")[2]
-    axios.post("/boards/get_board_data", { id: boardId }).then((response) => {
+    this.boardId = location.pathname.split("/")[2]
+    axios.post("/boards/get_board_data", { id: this.boardId }).then((response) => {
       this.board = response.data;
       console.log(response.data);
     });
@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       board: {},
+      boardId: ""
     };
   },
 };
