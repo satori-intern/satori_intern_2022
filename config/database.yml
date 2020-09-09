@@ -25,4 +25,7 @@ test:
 
 production:
   <<: *default
+  username: satoriadmin
+  password: 4wVmecYq8i2mqhRv
   database: satori_intern_2022
+
