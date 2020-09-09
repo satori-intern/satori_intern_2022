@@ -7,25 +7,14 @@
           <Item :item-item="item" />
         </p>
       </div>
-      <button
-        type="button"
-        class="btn btn-outline-info d-flex align-self-center"
-        @click="switchAddItem"
-      >
-        <span class="material-icons">add</span> アイテムを追加
-      </button>
-      <div class="input-group" v-if="showAddItem">
-        <input type="text" class="form-control" placeholder="アイテム名" v-model="newItemName" />
-        <div class="input-group-append">
-          <button class="btn btn-success" type="button" @click="addItem">追加</button>
-        </div>
-      </div>
+      <AddBtn @catchNewName="addItem" :add-type="addType" />
     </div>
   </div>
 </template>
 
 <script>
 import Item from "./Item";
+import AddBtn from "./AddBtn";
 
 export default {
   name: "List",
@@ -33,13 +22,12 @@ export default {
     switchAddItem: function () {
       this.showAddItem = this.showAddItem ? false : true;
     },
-    addItem: function () {
+    addItem: function (newName) {
       const addListId = this.id;
-      const newItemName = this.newItemName;
       const newItemId = 0; // axiosで取得する
       const newItem = {
         id: newItemId,
-        name: newItemName,
+        name: newName,
         detail: "",
       };
       this.items.push(newItem);
@@ -59,14 +47,15 @@ export default {
   },
   components: {
     Item,
+    AddBtn
   },
   data() {
     return {
-      newItemName: "",
+      newName: "",
+      addType: "アイテム",
       title: this.listTitle,
       items: this.listItems,
       id: this.listId,
-      showAddItem: false,
     };
   },
 };

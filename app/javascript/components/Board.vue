@@ -7,24 +7,7 @@
           <List :list-items="list.items" :list-title="list.name" :list-id="list.id" />
         </div>
         <div class="col-12 col-md-4 col-lg-3">
-          <button
-            type="button"
-            class="btn btn-outline-light d-flex align-self-center"
-            @click="switchAddList"
-          >
-            <span class="material-icons">add</span> リストを追加する
-          </button>
-          <div class="input-group" v-if="showAddList">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="リスト名"
-              v-model="newListName"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-success" type="button" @click="addList">追加</button>
-            </div>
-          </div>
+          <AddBtn @catchNewName="addList" :add-type="addType"/>
         </div>
       </div>
     </div>
@@ -33,30 +16,26 @@
 
 <script>
 import List from "./List";
+import AddBtn from "./AddBtn";
 
 export default {
   name: "Board",
-  methods: {
-    switchAddList: function () {
-      this.showAddList = this.showAddList ? false : true;
-    },
-    addList: function() {
+  methods: { // モーダルで編集したものの通信も行う
+    addList: function(newName) {
       const addBoardId = 0 //location.pathname.replace()でとる？
-      const newListName = this.newListName
       const newListId = 0 // axiosで取得する
       const newList = {
         id: newListId,
-        name: newListName,
+        name: newName,
         items: []
       }
       this.board.lists.push(newList)
-      this.showAddList = false
     }
   },
   data() {
     return {
-      newListName: "",
-      showAddList: false,
+      newName: "",
+      addType: "リスト",
       board: {
         board_name: "イルカ",
         lists: [
@@ -109,6 +88,7 @@ export default {
   },
   components: {
     List,
+    AddBtn,
   },
 };
 </script>
