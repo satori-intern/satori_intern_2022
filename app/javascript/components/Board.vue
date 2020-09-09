@@ -30,7 +30,8 @@ export default {
     draggable,
   },
   mounted() {
-    axios.post("/boards/get_board_data", { id: 0 }).then((response) => {
+    const boardId = location.pathname.split("/")[2]
+    axios.post("/boards/get_board_data", { id: boardId }).then((response) => {
       this.board = response.data;
       console.log(response.data);
     });
