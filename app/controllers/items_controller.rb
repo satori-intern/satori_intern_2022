@@ -30,7 +30,9 @@ class ItemsController < ApplicationController
     def destroy
         id = params[:id]
         item = Item.find(id)
-        Item.where("#{item.list_id} = `list_id` and #{item.index} < `index`").update_all('`index` = `index` - 1')
+        Item.where("`list_id` = ?", item.list_id)
+            .where("`index` > ?", item.index)
+            .update_all('`index` = `index` - 1')
         item.destroy
         render json: {}
     end
