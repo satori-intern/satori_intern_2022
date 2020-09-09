@@ -4,7 +4,7 @@ class ListsController < ApplicationController
 
     # POST /lists/create
     def create
-        params = JSON.parse request.body.read
+        # params = JSON.parse request.body.read
         name = params['name']
         board_id = params['board_id']
         index = List.where(board_id: board_id).exists? ? List.where(board_id: board_id).order(index: :desc).first['index'] + 1 : 1
