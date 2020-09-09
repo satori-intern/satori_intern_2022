@@ -20,8 +20,8 @@ items = [
     { id: 0, name: 'item1-1-1', detail: 'Hello World!', list_id: 1, index: 0},
     { id: 3, name: 'item1-2-3', detail: 'Hoge', list_id: 0, index: 1},
     { id: 4, name: 'item1-2-2', detail: 'Huga', list_id: 0, index: 0},
-    { id: 2, name: 'item1-1-3', detail: 'Piyo', list_id: 1, index: 2},
-    { id: 1, name: 'item1-1-2', detail: '', list_id: 1, index: 3}
+    { id: 2, name: 'item1-1-3', detail: 'Piyo', list_id: 1, index: 1},
+    { id: 1, name: 'item1-1-2', detail: '', list_id: 1, index: 2}
 ]
 
 ActiveRecord::Base.transaction do
