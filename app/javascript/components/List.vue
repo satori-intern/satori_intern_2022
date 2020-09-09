@@ -4,7 +4,7 @@
         <h4 class="card-title">{{title}}</h4>
         <draggable v-model="list.items" :key="list.id" group="board" @start="moveId">
             <div v-for="item in list.items" :key="item.id">
-                <Item :item-item="item" />
+                <Item :item-copy="item" />
             </div>
         </draggable>
         <button type="button" class="btn btn-outline-info d-flex align-self-center">
@@ -24,7 +24,7 @@ export default {
         draggable,
     },
     props: {
-        listList: {
+        listCopy: {
             type: Object,
             default: () => {
                 return {};
@@ -33,8 +33,8 @@ export default {
     },
     data() {
         return {
-            title: this.listList.name,
-            list: this.listList,
+            title: this.listCopy.name,
+            list: this.listCopy,
             moveOldIndex: 0,
         };
     },

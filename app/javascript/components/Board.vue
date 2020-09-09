@@ -5,7 +5,7 @@
         <div class="row">
             <draggable v-model="board.lists" group="lists" class="row">
                 <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
-                    <List :list-list="list" />
+                    <List :list-copy="list" />
                 </div>
                 <div class="col-12 col-md-4 col-lg-3">
                     <button type="button" class="btn btn-outline-light d-flex align-self-center">
@@ -30,12 +30,14 @@ export default {
         draggable,
     },
     mounted() {
-        axios.post("/boards/get_board_data", {
-            id: 0
-        }).then((response) => {
-            this.board = response.data;
-            console.log(response.data);
-        });
+        axios
+            .post("/boards/get_board_data", {
+                id: 0,
+            })
+            .then((response) => {
+                this.board = response.data;
+                console.log(response.data);
+            });
     },
     data() {
         return {
