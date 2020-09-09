@@ -5,7 +5,7 @@
         <div class="row">
             <draggable v-model="board.lists" group="lists" class="row">
                 <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
-                    <List :list-items="list.items" :list-title="list.name" :id="list.id" />
+                    <List :list-list="list" />
                 </div>
                 <div class="col-12 col-md-4 col-lg-3">
                     <button type="button" class="btn btn-outline-light d-flex align-self-center">
