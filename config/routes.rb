@@ -5,6 +5,14 @@ Rails.application.routes.draw do
   post "static_pages/show"
 
   # boards controller
+  get    "boards/index"       => "boards#index"
+  get    "boards/new"         => "boards#new"
+  post   "boards/create"      => "boards#create"
+  get    "boards/:id/edit"    => "boards#edit"
+  put    "boards/:id/update"  => "boards#update"
+  delete "boards/:id/destroy" => "boards#destroy"
+  get    "boards/:id/show"    => "boards#show"
+
   post "boards/get_board_data", "boards#get_board_data"
 
   # lists controller
