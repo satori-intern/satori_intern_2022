@@ -1,6 +1,6 @@
 <template>
 <div class="bg-info">
-    <h3 class="text-light p-1">{{board.board_name}}</h3>
+    <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
         <div class="row">
             <draggable v-model="board.lists" group="lists" class="row">
@@ -21,6 +21,7 @@
 <script>
 import List from "./List";
 import draggable from "vuedraggable";
+import axios from 'axios'
 
 export default {
     name: "Board",
@@ -28,8 +29,18 @@ export default {
         List,
         draggable,
     },
+    mounted() {
+        axios
+        .post("/boards/get_board_data",{ id:0 })
+        .then(response => {
+            this.board = response.data
+            console.log(response.data)
+            })
+    },
     data() {
         return {
+            board: {}
+            /*
             board: {
                 board_name: "イルカ",
                 lists: [{
@@ -72,7 +83,7 @@ export default {
                         ],
                     },
                 ],
-            },
+            },*/
         };
     },
 };
