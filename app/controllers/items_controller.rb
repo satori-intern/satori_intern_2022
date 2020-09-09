@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
         render json: {id: id}
     end
 
-    def edit
+    def update
         id = params[:id]
         name = params[:name]
         detail = params[:detail]
