@@ -20,13 +20,18 @@ class ItemsController < ApplicationController
         id = params[:id]
         name = params[:name]
         detail = params[:detail]
-        # TODO
+        item = Item.find(id)
+        item.name = name
+        item.detail = detail
+        item.save
         render json: {}
     end
 
     def destroy
         id = params[:id]
-        # TODO
+        item = Item.find(id)
+        Item.where("#{item.list_id} = `list_id` and #{item.index} < `index`").update_all('`index` = `index` - 1')
+        item.destroy
         render json: {}
     end
 
