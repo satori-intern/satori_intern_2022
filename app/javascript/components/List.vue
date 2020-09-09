@@ -23,6 +23,7 @@ export default {
   components: {
     Item,
     draggable,
+    AddBtn,
   },
   props: {
     listTitle: {
@@ -42,9 +43,6 @@ export default {
     listTitle: {
       type: String,
     },
-    listId: {
-      type: Number,
-    },
   },
   data() {
     return {
@@ -52,6 +50,8 @@ export default {
       items: this.listItems,
       listId: this.id,
       moveOldIndex: 0,
+      newName: "",
+      addType: "アイテム",
     };
   },
   created() {
@@ -65,9 +65,9 @@ export default {
   },
   methods: {
     addItem: function (newName) {
-      const addListId = this.id;
+      const addListId = this.listId;
       const newItemId = axios
-        .post("/item/create", { name: newName, list_id: addListId })
+        .post("/items/create", { name: newName, list_id: addListId })
         .then((res) => res.data.id);
       const newItem = {
         id: newItemId,
@@ -114,19 +114,6 @@ export default {
     moveId: function (event) {
       this.moveOldIndex = event.oldIndex;
     },
-  },
-  components: {
-    Item,
-    AddBtn,
-  },
-  data() {
-    return {
-      newName: "",
-      addType: "アイテム",
-      title: this.listTitle,
-      items: this.listItems,
-      id: this.listId,
-    };
   },
 };
 </script>

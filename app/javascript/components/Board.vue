@@ -28,7 +28,7 @@ export default {
     // モーダルで編集したものの通信も行う
     addList: function (newName) {
       const newListId = axios
-        .post("/lists/create", { name: newName, board_id: boardId })
+        .post("/lists/create", { name: newName, board_id: this.boardId })
         .then((res) => res.data.id);
       const newList = {
         id: newListId,
@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       board: {},
-      boardId: ""
+      boardId: "",
+      addType: "リスト"
     };
   },
 };
