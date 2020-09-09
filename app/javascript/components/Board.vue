@@ -7,7 +7,7 @@
           <List :list-items="list.items" :list-title="list.name" :list-id="list.id" />
         </div>
         <div class="col-12 col-md-4 col-lg-3">
-          <AddBtn @catchNewName="addList" :add-type="addType"/>
+          <AddBtn @catchNewName="addList" :add-type="addType" />
         </div>
       </div>
     </div>
@@ -17,20 +17,23 @@
 <script>
 import List from "./List";
 import AddBtn from "./AddBtn";
+import axios from "axios";
 
 export default {
   name: "Board",
-  methods: { // モーダルで編集したものの通信も行う
-    addList: function(newName) {
-      const addBoardId = 0 //location.pathname.replace()でとる？
-      const newListId = 0 // axiosで取得する
+  methods: {
+    // モーダルで編集したものの通信も行う
+    addList: function (newName) {
+      const newListId = axios
+        .post("/lists/create", { name: newName, board_id: boardId })
+        .then((res) => res.data.id);
       const newList = {
         id: newListId,
         name: newName,
-        items: []
-      }
-      this.board.lists.push(newList)
-    }
+        items: [],
+      };
+      this.board.lists.push(newList);
+    },
   },
   data() {
     return {
