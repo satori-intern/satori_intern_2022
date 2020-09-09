@@ -50,12 +50,17 @@ class ListsController < ApplicationController
         else
             to_index = -1
         end
-        # TODO refactoring
         if from_index > to_index
-            List.where("#{board_id} = `board_id` and #{to_index} < `index` and `index` < #{from_index}").update_all('`index` = `index` + 1')
+            List.where('`board_id` = ?', board_id)
+                .where('? < `index`', to_index)
+                .where('`index` < ?', from_index)
+                .update_all('`index` = `index` + 1')
             from_list.index = to_index + 1
         else
-            List.where("#{board_id} = `board_id` and #{from_index} < `index` and `index` <= #{to_index}").update_all('`index` = `index` - 1')
+            List.where('`board_id` = ?', to_list_id)
+                .where('? < `index`', from_index)
+                .where('`index` <= ?', to_index)
+                .update_all('`index` = `index` - 1')
             from_list.index = to_index
         end
         from_list.save
