@@ -3,19 +3,18 @@
     <h3 class="text-light p-1">{{board.board_name}}</h3>
     <div class="container p-1">
         <div class="row">
-            <draggable v-model="board.lists" group="lists" class="col-12 col-md-4 col-lg-3" v-for="list in board.lists" :key="list.id">
-                <div>
+            <draggable v-model="board.lists" group="lists" class="row">
+                <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
                     <List :list-items="list.items" :list-title="list.name" :id="list.id" />
                 </div>
+                <div class="col-12 col-md-4 col-lg-3">
+                    <button type="button" class="btn btn-outline-light d-flex align-self-center">
+                        <span class="material-icons">add</span> リストを追加する
+                    </button>
+                </div>
             </draggable>
-            <div class="col-12 col-md-4 col-lg-3">
-                <button type="button" class="btn btn-outline-light d-flex align-self-center">
-                    <span class="material-icons">add</span> リストを追加する
-                </button>
-            </div>
         </div>
     </div>
-    {{board}}
 </div>
 </template>
 
