@@ -5,7 +5,7 @@ set :application, "intern2022"
 set :repo_url, "git@github.com:satori-inc/satori_intern_2022.git"
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/user/projects/intern2022"
