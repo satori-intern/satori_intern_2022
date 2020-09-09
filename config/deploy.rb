@@ -8,7 +8,7 @@ set :repo_url, "git@github.com:satori-inc/satori_intern_2022.git"
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/user/projects/intern2022"
+set :deploy_to, "/home/vagrant/projects/intern2022"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
