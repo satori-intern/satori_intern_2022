@@ -24,10 +24,11 @@ class ListsController < ApplicationController
         render json: {}
     end
 
+    # DELETE lists/destroy
     def destroy
-        id = params[:id]
-        # TODO
-        render json: {}
+        list = List.find(params[:id])
+        list.destroy
+        new_index = List.where('`board_id` = ?', list.board_id).where('`index` > ?', list.index).update_all('`index` = `index` - 1')
     end
 
     def move
