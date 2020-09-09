@@ -1,10 +1,19 @@
 class ItemsController < ApplicationController
+    protect_from_forgery with: :null_session
+    skip_before_action :verify_authenticity_token
+
     def create
-        name = params[:name]
-        list_id = params[:list_id]
-        id = 0
-        # TODO
-        render json: {id: id}
+        # params = JSON.parse request.body.read
+        name = params['name']
+        list_id = params['list_id']
+        index = Item.where(list_id: list_id).exists? ? Item.where(list_id: list_id).order(index: :desc).first['index'] + 1 : 1
+
+        if item = Item.create(name: name, list_id: list_id, index: index)
+            id = item.id
+            render json: { id: id }
+        else
+            render json: { message: 'error' }
+        end
     end
 
     def update
