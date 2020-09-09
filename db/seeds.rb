@@ -17,11 +17,11 @@ lists = [
 ]
 
 items = [
-    { id: 0, name: 'item1-1-1', detail: 'Hello World!', board_id: 1, index: 0},
-    { id: 3, name: 'item1-2-3', detail: 'Hoge', board_id: 0, index: 1},
-    { id: 4, name: 'item1-2-2', detail: 'Huga', board_id: 0, index: 0},
-    { id: 2, name: 'item1-1-3', detail: 'Piyo', board_id: 1, index: 2},
-    { id: 1, name: 'item1-1-2', detail: '', board_id: 1, index: 3}
+    { id: 0, name: 'item1-1-1', detail: 'Hello World!', list_id: 1, index: 0},
+    { id: 3, name: 'item1-2-3', detail: 'Hoge', list_id: 0, index: 1},
+    { id: 4, name: 'item1-2-2', detail: 'Huga', list_id: 0, index: 0},
+    { id: 2, name: 'item1-1-3', detail: 'Piyo', list_id: 1, index: 2},
+    { id: 1, name: 'item1-1-2', detail: '', list_id: 1, index: 3}
 ]
 
 ActiveRecord::Base.transaction do
