@@ -17,7 +17,7 @@ class ListsController < ApplicationController
         end
     end
 
-    def edit
+    def update
         id = params[:id]
         name = params[:name]
         # TODO

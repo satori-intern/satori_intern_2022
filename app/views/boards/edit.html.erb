@@ -1,0 +1,6 @@
+<%= form_tag({controller: "boards", action: "update"},{method: :put}) do %>
+    <%= label_tag(:name, "Board Name:") %>
+    <%= text_field_tag(:name, @board.name) %>
+    <%= submit_tag("Save") %>
+<% end %>
+<%= yield %>
