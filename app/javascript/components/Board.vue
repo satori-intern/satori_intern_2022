@@ -1,6 +1,6 @@
 <template>
 <div class="bg-info">
-    <h3 class="text-light p-1">{{board.board_name}}</h3>
+    <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
         <div class="row">
             <draggable v-model="board.lists" group="lists" class="row">
@@ -21,6 +21,7 @@
 <script>
 import List from "./List";
 import draggable from "vuedraggable";
+import axios from "axios";
 
 export default {
     name: "Board",
@@ -28,51 +29,17 @@ export default {
         List,
         draggable,
     },
+    mounted() {
+        axios.post("/boards/get_board_data", {
+            id: 0
+        }).then((response) => {
+            this.board = response.data;
+            console.log(response.data);
+        });
+    },
     data() {
         return {
-            board: {
-                board_name: "イルカ",
-                lists: [{
-                        id: 0,
-                        name: "TODO",
-                        items: [{
-                                id: 1,
-                                name: "今日の献立を考える",
-                                detail: "今日はお肉が良さそう",
-                            },
-                            {
-                                id: 2,
-                                name: "ご飯を食べる",
-                                detail: "お腹減ったな〜",
-                            },
-                        ],
-                    },
-                    {
-                        id: 3,
-                        name: "Doing",
-                        items: [{
-                            id: 4,
-                            name: "天気を予想する",
-                            detail: "今日は風が騒がしいな...",
-                        }, ],
-                    },
-                    {
-                        id: 5,
-                        name: "Done",
-                        items: [{
-                                id: 6,
-                                name: "家計簿をつける",
-                                detail: "え、今月の収支ヤバすぎ！？",
-                            },
-                            {
-                                id: 7,
-                                name: "予算を立てる",
-                                detail: "給付金をあてにしよう",
-                            },
-                        ],
-                    },
-                ],
-            },
+            board: {},
         };
     },
 };
