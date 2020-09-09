@@ -17,16 +17,19 @@ class ListsController < ApplicationController
         end
     end
 
+    # PUT lists/update
     def update
-        id = params[:id]
-        name = params[:name]
-        # TODO
+        list = List.find(params[:id])
+        list.name = params[:name]
+        list.save
         render json: {}
     end
 
+    # DELETE lists/destroy
     def destroy
-        id = params[:id]
-        # TODO
+        list = List.find(params[:id])
+        list.destroy
+        new_index = List.where('`board_id` = ?', list.board_id).where('`index` > ?', list.index).update_all('`index` = `index` - 1')
         render json: {}
     end
 
