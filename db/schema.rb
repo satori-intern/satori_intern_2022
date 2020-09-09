@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_092336) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.bigint "board_id"
+    t.bigint "list_id"
     t.bigint "index"
     t.text "detail"
     t.datetime "created_at", precision: 6, null: false
