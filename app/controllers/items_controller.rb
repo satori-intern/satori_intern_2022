@@ -51,21 +51,30 @@ class ItemsController < ApplicationController
         else
             to_index = -1
         end
-        # TODO refactoring
         if from_list_id != to_list_id
             # 他のリストに移動させるなら
             # 移動前のアイテムの後ろのindexすべてを-1する
-            Item.where("#{from_list_id} = `list_id` and #{from_index} < `index`").update_all('`index` = `index` - 1')
+            Item.where('`list_id` = ?', from_list_id)
+                .where('? < `index`', from_index)
+                .update_all('`index` = `index` - 1')
             # 移動後のアイテムの後ろのindexすべてを+1する
-            Item.where("#{to_list_id} = `list_id` and #{to_index} < `index`").update_all('`index` = `index` + 1')
+            Item.where('`list_id` = ?', to_list_id)
+                .where('? < `index`', to_index)
+                .update_all('`index` = `index` + 1')
             # listの移動
             from_item.list_id = to_list_id
             from_item.index = to_index + 1
         elsif from_index > to_index
-            Item.where("#{to_list_id} = `list_id` and #{to_index} < `index` and `index` < #{from_index}").update_all('`index` = `index` + 1')
+            Item.where('`list_id` = ?', to_list_id)
+                .where('? < `index`', to_index)
+                .where('`index` < ?', from_index)
+                .update_all('`index` = `index` + 1')
             from_item.index = to_index+1
         else
-            Item.where("#{to_list_id} = `list_id` and #{from_index} < `index` and `index` <= #{to_index}").update_all('`index` = `index` - 1')
+            Item.where('`list_id` = ?', to_list_id)
+                .where('? < `index`', from_index)
+                .where('`index` <= ?', to_index)
+                .update_all('`index` = `index` - 1')
             from_item.index = to_index
         end
         from_item.save
