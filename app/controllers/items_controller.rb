@@ -20,7 +20,10 @@ class ItemsController < ApplicationController
         id = params[:id]
         name = params[:name]
         detail = params[:detail]
-        # TODO
+        item = Item.find(id)
+        item.name = name
+        item.detail = detail
+        item.save
         render json: {}
     end
 
