@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
         list_id = params['list_id']
         index = Item.where(list_id: list_id).exists? ? Item.where(list_id: list_id).order(index: :desc).first['index'] + 1 : 1
 
-        if item = Item.create(name: name, list_id: list_id, index: index)
+        if item = Item.create(name: name, list_id: list_id, index: index, detail: '')
             id = item.id
             render json: { id: id }
         else
