@@ -15,23 +15,22 @@
 <script>
 import Item from "./Item";
 import AddBtn from "./AddBtn";
+import axios from "axios"
 
 export default {
   name: "List",
   methods: {
-    switchAddItem: function () {
-      this.showAddItem = this.showAddItem ? false : true;
-    },
     addItem: function (newName) {
       const addListId = this.id;
-      const newItemId = 0; // axiosで取得する
+      const newItemId = axios
+        .post("/item/create", { name: newName, list_id: addListId })
+        .then((res) => res.data.id);
       const newItem = {
         id: newItemId,
         name: newName,
         detail: "",
       };
       this.items.push(newItem);
-      this.showAddItem = false;
     },
   },
   props: {
@@ -60,7 +59,3 @@ export default {
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
