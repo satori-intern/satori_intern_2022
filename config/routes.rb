@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get "static_pages/home"
   get "/healthcheck" => "healthcheck#healthcheck"
-
+  
   # boards controller
   get    "boards/index"       => "boards#index"
   get    "boards/new"         => "boards#new"
@@ -13,18 +13,18 @@ Rails.application.routes.draw do
   delete "boards/:id/destroy" => "boards#destroy"
   get    "boards/:id/show"    => "boards#show"
 
-  post "boards/get_board_data", "boards#get_board_data"
+  post "boards/get_board_data"=> "apis/boards#get_board_data"
 
   # lists controller
-  post   "lists/create" , "lists#create"
-  put    "lists/update" , "lists#update"
-  delete "lists/destroy", "lists#destroy"
-  post   "lists/move"   , "lists#move"
+  post   "lists/create" => "apis/lists#create"
+  put    "lists/update" => "apis/lists#update"
+  delete "lists/destroy"=> "apis/lists#destroy"
+  post   "lists/move"   => "apis/lists#move"
 
   # items controller
-  post   "items/create" , "items#create"
-  put    "items/update" , "items#update"
-  delete "items/destroy", "items#destroy"
-  post   "items/move"   , "items#move"
+  post   "items/create" => "apis/items#create"
+  put    "items/update" => "apis/items#update"
+  delete "items/destroy"=> "apis/items#destroy"
+  post   "items/move"   => "apis/items#move"
 
 end
