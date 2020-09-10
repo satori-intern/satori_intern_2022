@@ -38,6 +38,10 @@ export default {
             type: Number,
             default: 1,
         },
+        index: {
+            type: Number,
+            default: 1,
+        },
     },
     data() {
         return {
@@ -99,12 +103,10 @@ export default {
             this.moveOldIndex = event.oldIndex;
         },
         ItemToListInfo: function (itemInfo) {
-            this.$emit('ListToBoardInfo', itemInfo, this.title, this.listId)
+            this.$emit('ListToBoardInfo', itemInfo, this.title, this.listId, this.index)
         },
         removeItem: function (id) {
-            console.log(id)
-            console.log(this.items)
-            console.log(this.items.find((item) => item.id === id))
+            this.items.splice(this.items.indexOf(this.items.find((item) => item.id === id)), 1)
         }
     },
 };

@@ -1,12 +1,12 @@
 <template>
   <div class="bg-info">
-    <EditModal :itemInfo="itemInfo" :listTitle="listTitle" :listId="listId" @editFinish="editFinish" @removeFinish="removeFinish" v-if="modal"></EditModal>
+    <EditModal :itemInfo="itemInfo" :listTitle="listTitle" :listId="listId" :index="index" @editFinish="editFinish" @removeFinish="removeFinish" v-if="modal"></EditModal>
     <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
       <div class="row">
         <draggable v-model="board.lists" group="lists" class="row">
-          <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
-            <List :list-items="list.items" :list-title="list.name" :id="list.id" @ListToBoardInfo=ListToBoardInfo ref="remove" />
+          <div v-for="(list, index) in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
+            <List :list-items="list.items" :list-title="list.name" :id="list.id" :index="index" @ListToBoardInfo=ListToBoardInfo ref="remove" />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <button type="button" class="btn btn-outline-light d-flex align-self-center">
@@ -45,24 +45,27 @@ export default {
       listTitle: "",
       listId: "",
       board: {},
-      boardId: ""
+      boardId: "",
+      index: "",
     };
   },
   methods: {
-    editFinish: function () {
+    editFinish: function (itemInfo) {
+      console.log(itemInfo)
+      //api処理
       this.modal = false
     },
-    removeFinish: function (id, listId) {
-      // console.log(listId)
-      // console.log(this.board.lists)
-      this.$refs.remove[listId].removeItem(id, listId)
+    removeFinish: function (id, index) {
       this.modal = false
+      //api処理
+      this.$refs.remove[index].removeItem(id)
     },
-    ListToBoardInfo: function (itemInfo, listTitle, listId) {
+    ListToBoardInfo: function (itemInfo, listTitle, listId, listIndex) {
       this.itemInfo = itemInfo
       this.listTitle = listTitle
       this.listId = listId
       this.modal = true
+      this.index = listIndex
     }
   }
 };

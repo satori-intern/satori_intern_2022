@@ -20,7 +20,7 @@
 <script>
 export default {
   name: 'EditModal',
-  props: ['itemInfo', 'listTitle', 'listId'],
+  props: ['itemInfo', 'listTitle', 'listId', 'index'],
   data() {
     return {
       EditItemInfo: JSON.parse(JSON.stringify(this.itemInfo)),
@@ -32,11 +32,10 @@ export default {
     edit: function () {
       this.itemInfo.name = this.EditItemInfo.name
       this.itemInfo.detail = this.EditItemInfo.detail
-      console.log(this.itemInfo)
-      this.$emit('editFinish')
+      this.$emit('editFinish', this.itemInfo)
     },
     remove: function () {
-      this.$emit('removeFinish', this.itemInfo.id, this.listNum)
+      this.$emit('removeFinish', this.itemInfo.id, this.index)
     }
   },
 }
