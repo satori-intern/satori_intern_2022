@@ -3,7 +3,7 @@
     <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
         <div class="row a">
-            <draggable v-model="board.lists" group="lists" :options="{animation:500}" class="row" draggable=".list">
+            <draggable v-model="board.lists" group="lists" :options="{animation:500}" class="row" draggable=".list" @end="moveListId">
                 <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
                     <List :list-copy="list" />
                 </div>
@@ -29,6 +29,12 @@ export default {
         List,
         draggable,
     },
+    data() {
+        return {
+            board: {},
+            boardId: "",
+        };
+    },
     mounted() {
         this.boardId = location.pathname.split("/")[2];
         axios
@@ -40,11 +46,24 @@ export default {
                 console.log(response.data);
             });
     },
-    data() {
-        return {
-            board: {},
-            boardId: "",
-        };
+    methods: {
+        moveListId: function (event) {
+            const oldIndex = event.oldIndex;
+            const newIndex = event.newIndex;
+
+            const bordId = this.board.lists[newIndex].id;
+            const bordIdBefore =
+                newIndex - 1 >= 0 ? this.board.lists[newIndex - 1].id : null;
+
+            axios
+                .post("/lists/move", {
+                    id: bordId,
+                    to_id: bordIdBefore,
+                })
+                .then((response) => {
+                    //console.log(response);
+                });
+        },
     },
 };
 </script>
