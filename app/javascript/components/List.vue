@@ -1,7 +1,29 @@
 <template>
   <div class="card">
     <div class="card-body bg-light">
-      <h4 class="card-title">{{title}}</h4>
+      <div class="d-flex">
+        <h4 class="p-2 align-self-center w-100">{{title}}</h4>
+        <div class="p-2 flex-shrink-1">
+          <button type="button" class="btn btn-outline-info align-self-center" @click="modalBtn">
+            <span class="material-icons">create</span>
+          </button>
+        </div>
+      </div>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder
+          aria-label
+          aria-describedby="basic-addon1"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-info" type="button">編集</button>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-danger" type="button">削除</button>
+        </div>
+      </div>
       <draggable
         v-model="list.items"
         :key="list.id"
@@ -37,7 +59,7 @@ export default {
       default: () => {
         return {};
       },
-    }
+    },
   },
   data() {
     return {
