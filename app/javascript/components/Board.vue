@@ -1,6 +1,8 @@
 <template>
   <div class="bg-info">
     <h3 class="text-light p-1">{{board.name}}</h3>
+    <!-- <button @click="openModal">開く</button>
+    <SampleModal @close="closeModal" v-if="modal"></SampleModal> -->
     <div class="container p-1">
       <div class="row">
         <draggable v-model="board.lists" group="lists" class="row">
@@ -22,12 +24,13 @@
 import List from "./List";
 import draggable from "vuedraggable";
 import axios from "axios";
-
+// import SampleModal from './SampleModal'
 export default {
   name: "Board",
   components: {
     List,
     draggable,
+    // SampleModal,
   },
   mounted() {
     this.boardId = location.pathname.split("/")[2]
@@ -38,10 +41,19 @@ export default {
   },
   data() {
     return {
+      // modal: false,
       board: {},
       boardId: ""
     };
   },
+  methods: {
+    openModal() {
+      this.modal = true
+    },
+    closeModal() {
+      this.modal = false
+    },
+  }
 };
 </script>
 
