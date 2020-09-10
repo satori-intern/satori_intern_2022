@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-#  before_action :authenticate_user!
+  before_action :authenticate_user!
+
+  protect_from_forgery with: :exception
 
   # ログイン後のリダイレクト先の指定
   def after_sign_in_path_for(resource)
