@@ -20,13 +20,13 @@ export default {
         },
     },
     props: {
-        itemItem: {
+        itemCopy: {
             type: Object,
         },
     },
     data() {
         return {
-            item: this.itemItem,
+            item: this.itemCopy,
             showModal: false,
         };
     },
