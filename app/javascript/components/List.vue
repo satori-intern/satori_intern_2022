@@ -17,6 +17,8 @@
 <script>
 import Item from "./Item";
 import draggable from "vuedraggable";
+import axios from "axios";
+
 export default {
     name: "List",
     components: {
@@ -56,7 +58,6 @@ export default {
 
             //減ったほうのlists
             if (newLists.length < oldLists.length) return;
-            console.log(oldLists, newLists);
             let beforeMoveId;
             let afterMoveId;
 
@@ -77,7 +78,6 @@ export default {
                 //動かしたアイテムのidのひとつ上
                 afterMoveId =
                     movedIdIndex - 1 >= 0 ? newLists[movedIdIndex - 1].id : null;
-                console.log(beforeMoveId, afterMoveId);
             }
             //同じリスト内の移動のとき
             if (newLists.length === oldLists.length) {
@@ -93,19 +93,16 @@ export default {
                     movedIdIndex - 1 >= 0 ? newLists[movedIdIndex - 1].id : null;
             }
             let changeListId = this.list.id;
-            console.log(
-                "beforeMoveId:",
-                beforeMoveId,
-                "afterMoveId:",
-                afterMoveId,
-                "changeListId:",
-                changeListId
-            );
-            return beforeMoveId, afterMoveId, changeListId;
+            axios
+                .post("/items/move", {
+                    id: beforeMoveId,
+                    to_id: afterMoveId,
+                    list_id: changeListId,
+                })
+                .then((response) => {});
         },
         moveId: function (event) {
             this.moveOldIndex = event.oldIndex;
-            console.log(event);
         },
     },
 };
