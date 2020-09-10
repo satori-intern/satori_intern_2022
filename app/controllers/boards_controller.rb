@@ -1,5 +1,6 @@
 class BoardsController < ApplicationController
     protect_from_forgery with: :null_session
+    skip_before_action :verify_authenticity_token
 
     # show boards list
     def index
@@ -11,7 +12,8 @@ class BoardsController < ApplicationController
     end
 
     def create
-        board = Board.create(name: params[:name])
+        user = User.find(current_user.id)
+        user.boards.create(name: params[:name])
         redirect_to :action => 'index'
     end
 

@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :board, through: :assignment
-  has_many :assignment
+  has_many :assignment, dependent: :destroy
+  has_many :boards, through: :assignment
 end
