@@ -122,7 +122,9 @@ export default {
     delList: function () {
       axios
         .delete("/lists/destroy", { params: { id: this.list.id } })
-        .then((res) => console.log(res));
+        .then((res) => {
+            console.log(res)
+            this.$emit("disList", this.list.id)});
     },
     moveItem: function (val, oldVal) {
       const oldLists = oldVal[0];

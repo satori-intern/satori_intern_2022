@@ -12,7 +12,7 @@
           @end="moveListId"
         >
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
-            <List :list-copy="list" />
+            <List :list-copy="list" @disList="disappearList" />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <AddBtn @catchNewName="addList" :add-type="addType" />
@@ -55,6 +55,9 @@ export default {
       });
   },
   methods: {
+    disappearList: function (delListId) {
+      this.board.lists = this.board.lists.filter((n) => n.id !== delListId);
+    },
     addList: function (newName) {
       const newItemId = axios
         .post("/lists/create", { name: newName, board_id: this.boardId })
