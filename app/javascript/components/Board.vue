@@ -29,13 +29,15 @@ export default {
     addList: function (newName) {
       const newListId = axios
         .post("/lists/create", { name: newName, board_id: this.boardId })
-        .then((res) => res.data.id);
-      const newList = {
-        id: newListId,
-        name: newName,
-        items: [],
-      };
-      this.board.lists.push(newList);
+        .then((res) => res.data.id)
+        .then((newListId) => {
+          const newList = {
+            id: newListId,
+            name: newName,
+            items: [],
+          };
+          this.board.lists.push(newList);
+        });
     },
   },
   components: {
@@ -45,10 +47,12 @@ export default {
   },
   mounted() {
     this.boardId = location.pathname.split("/")[2]
-    axios.post("/boards/get_board_data", { id: this.boardId }).then((response) => {
-      this.board = response.data;
-      console.log(response.data);
-    });
+    axios
+      .post("/boards/get_board_data", { id: this.boardId })
+      .then((response) => {
+        this.board = response.data;
+        console.log(response.data);
+      });
   },
   data() {
     return {

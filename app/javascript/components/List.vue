@@ -68,15 +68,16 @@ export default {
       const addListId = this.listId;
       const newItemId = axios
         .post("/items/create", { name: newName, list_id: addListId })
-        .then((res) => res.data.id);
-      const newItem = {
-        id: newItemId,
-        name: newName,
-        detail: "",
-      };
-      this.items.push(newItem);
+        .then((res) => res.data.id)
+        .then((newItemId) => {
+          const newItem = {
+            id: newItemId,
+            name: newName,
+            detail: "",
+          };
+          this.items.push(newItem);
+        });
     },
-
     moveItem: function (val, oldVal) {
       const oldLists = oldVal[0];
       const newList = val[0];
