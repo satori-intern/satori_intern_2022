@@ -1,27 +1,33 @@
 <template>
   <div class="card">
+    <button
+      type="button"
+      class="btn btn-outline-danger w-100 font-weight-bold"
+      @mouseover="hoverDelBtn"
+      @mouseleave="leaveDelBtn"
+      @click="delList"
+      v-if="showEditBtn"
+    >
+      <span class="material-icons">clear</span>
+      {{delConf}}
+    </button>
     <div class="card-body bg-light">
       <div class="d-flex">
-        <h4 class="p-2 align-self-center w-100">{{title}}</h4>
+        <h4 v-if="!showEditBtn" class="p-2 align-self-center w-100">{{title}}</h4>
+        <input
+          v-model="title"
+          v-if="showEditBtn"
+          type="text"
+          class="form-control p-2 align-self-center w-100"
+        />
         <div class="p-2 flex-shrink-1">
-          <button type="button" class="btn btn-outline-info align-self-center" @click="modalBtn">
+          <button
+            type="button"
+            class="btn btn-outline-info align-self-center"
+            @click="switchEditBtn"
+          >
             <span class="material-icons">create</span>
           </button>
-        </div>
-      </div>
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder
-          aria-label
-          aria-describedby="basic-addon1"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-info" type="button">編集</button>
-        </div>
-        <div class="input-group-append">
-          <button class="btn btn-danger" type="button">削除</button>
         </div>
       </div>
       <draggable
@@ -68,6 +74,8 @@ export default {
       moveOldIndex: 0,
       newName: "",
       addType: "アイテム",
+      showEditBtn: false,
+      delConf: "",
     };
   },
   created() {
@@ -83,6 +91,20 @@ export default {
     );
   },
   methods: {
+    hoverDelBtn: function () {
+      this.delConf = "取り消せません！";
+    },
+    leaveDelBtn: function () {
+      this.delConf = "";
+    },
+    switchEditBtn: function () {
+      this.showEditBtn = this.showEditBtn ? false : true;
+      if (!this.showEditBtn) {
+        axios
+          .put("/lists/update", { id: this.list.id, name: this.title })
+          .then((res) => console.log(res));
+      }
+    },
     addItem: function (newName) {
       const addListId = this.list.id;
       const newItemId = axios
@@ -96,6 +118,11 @@ export default {
           };
           this.list.items.push(newItem);
         });
+    },
+    delList: function () {
+      axios
+        .delete("/lists/destroy", { id: this.list.id })
+        .then((res) => console.log(res));
     },
     moveItem: function (val, oldVal) {
       const oldLists = oldVal[0];
