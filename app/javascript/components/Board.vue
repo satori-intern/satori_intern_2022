@@ -3,7 +3,7 @@
     <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
         <div class="row a">
-            <draggable v-model="board.lists" group="lists" :options="{animation:500}" class="row">
+            <draggable v-model="board.lists" group="lists" :options="{animation:500}" class="row" draggable=".list">
                 <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
                     <List :list-copy="list" />
                 </div>
@@ -33,7 +33,7 @@ export default {
         this.boardId = location.pathname.split("/")[2];
         axios
             .post("/boards/get_board_data", {
-                id: this.boardId
+                id: this.boardId,
             })
             .then((response) => {
                 this.board = response.data;
