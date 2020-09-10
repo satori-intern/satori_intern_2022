@@ -9,6 +9,7 @@
           :options="{animation:500}"
           class="row"
           draggable=".list"
+          @end="moveListId"
         >
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
             <List :list-copy="list" />
@@ -30,10 +31,32 @@ import axios from "axios";
 
 export default {
   name: "Board",
+  components: {
+    List,
+    draggable,
+    AddBtn,
+  },
+  data() {
+    return {
+      board: {},
+      boardId: "",
+      addType: "リスト",
+    };
+  },
+  mounted() {
+    this.boardId = location.pathname.split("/")[2];
+    axios
+      .post("/boards/get_board_data", {
+        id: this.boardId,
+      })
+      .then((response) => {
+        this.board = response.data;
+        console.log(response.data);
+      });
+  },
   methods: {
-    // モーダルで編集したものの通信も行う
     addList: function (newName) {
-      const newListId = axios
+      const newItemId = axios
         .post("/lists/create", { name: newName, board_id: this.boardId })
         .then((res) => res.data.id)
         .then((newListId) => {
@@ -45,27 +68,23 @@ export default {
           this.board.lists.push(newList);
         });
     },
-  },
-  components: {
-    List,
-    draggable,
-    AddBtn,
-  },
-  mounted() {
-    this.boardId = location.pathname.split("/")[2];
-    axios
-      .post("/boards/get_board_data", { id: this.boardId })
-      .then((response) => {
-        this.board = response.data;
-        console.log(response.data);
-      });
-  },
-  data() {
-    return {
-      board: {},
-      boardId: "",
-      addType: "リスト",
-    };
+    moveListId: function (event) {
+      const oldIndex = event.oldIndex;
+      const newIndex = event.newIndex;
+
+      const bordId = this.board.lists[newIndex].id;
+      const bordIdBefore =
+        newIndex - 1 >= 0 ? this.board.lists[newIndex - 1].id : null;
+
+      axios
+        .post("/lists/move", {
+          id: bordId,
+          to_id: bordIdBefore,
+        })
+        .then((response) => {
+          //console.log(response);
+        });
+    },
   },
 };
 </script>
