@@ -2,9 +2,15 @@
   <div class="card">
     <div class="card-body bg-light">
       <h4 class="card-title">{{title}}</h4>
-      <draggable v-model="items" :key="listId" group="board" @start="moveId">
-        <div v-for="item in items" :key="item.id">
-          <Item :item-item="item" />
+      <draggable
+        v-model="list.items"
+        :key="list.id"
+        group="board"
+        @start="moveId"
+        :options="{animation:500}"
+      >
+        <div v-for="item in list.items" :key="item.id">
+          <Item :item-copy="item" />
         </div>
       </draggable>
       <AddBtn @catchNewName="addItem" :add-type="addType" />
@@ -26,29 +32,17 @@ export default {
     AddBtn,
   },
   props: {
-    listTitle: {
-      type: String,
-      default: "",
-    },
-    listItems: {
-      type: Array,
+    listCopy: {
+      type: Object,
       default: () => {
-        return [];
+        return {};
       },
-    },
-    id: {
-      type: Number,
-      default: 1,
-    },
-    listTitle: {
-      type: String,
-    },
+    }
   },
   data() {
     return {
-      title: this.listTitle,
-      items: this.listItems,
-      listId: this.id,
+      title: this.listCopy.name,
+      list: this.listCopy,
       moveOldIndex: 0,
       newName: "",
       addType: "アイテム",
@@ -56,16 +50,19 @@ export default {
   },
   created() {
     this.$watch(
-      () => [this.items],
+      () => [this.list.items],
       // valueやoldValueの型は上で返した配列になる
       (val, oldval) => {
         this.moveItem(val, oldval);
+      },
+      {
+        deep: true,
       }
     );
   },
   methods: {
     addItem: function (newName) {
-      const addListId = this.listId;
+      const addListId = this.list.id;
       const newItemId = axios
         .post("/items/create", { name: newName, list_id: addListId })
         .then((res) => res.data.id)
@@ -75,42 +72,53 @@ export default {
             name: newName,
             detail: "",
           };
-          this.items.push(newItem);
+          this.list.items.push(newItem);
         });
     },
     moveItem: function (val, oldVal) {
       const oldLists = oldVal[0];
-      const newList = val[0];
+      const newLists = val[0];
+
+      //減ったほうのlists
+      if (newLists.length < oldLists.length) return;
       let beforeMoveId;
       let afterMoveId;
-      //減ったほうのlists
-      if (newList.length < oldLists.length) return;
+
       //増えた方のlists
-      if (newList.length > oldLists.length) {
+      if (newLists.length > oldLists.length) {
         //動かすアイテムのid
-        beforeMoveId = newList.filter((elem) => {
+        beforeMoveId = newLists.filter((elem) => {
           return !oldLists.some((list) => {
             return elem.id === list.id;
           });
         })[0].id;
         //動かしたアイテムのidのインデックス
-        const movedIdIndex = newList.findIndex(({ id }) => id === beforeMoveId);
+        const movedIdIndex = newLists.findIndex(
+          ({ id }) => id === beforeMoveId
+        );
         //動かしたアイテムのidのひとつ上
         afterMoveId =
-          movedIdIndex - 1 >= 0 ? newList[movedIdIndex - 1].id : null;
-        console.log(beforeMoveId, afterMoveId);
+          movedIdIndex - 1 >= 0 ? newLists[movedIdIndex - 1].id : null;
       }
       //同じリスト内の移動のとき
-      if (newList.length === oldLists.length) {
+      if (newLists.length === oldLists.length) {
         beforeMoveId = oldLists[this.moveOldIndex].id;
         //動かしたアイテムのidのインデックス
-        const movedIdIndex = newList.findIndex(({ id }) => id === beforeMoveId);
+        const movedIdIndex = newLists.findIndex(
+          ({ id }) => id === beforeMoveId
+        );
         //動かしたアイテムのidのひとつ上
         afterMoveId =
-          movedIdIndex - 1 >= 0 ? newList[movedIdIndex - 1].id : null;
-        console.log(beforeMoveId, afterMoveId);
+          movedIdIndex - 1 >= 0 ? newLists[movedIdIndex - 1].id : null;
       }
-      return beforeMoveId, afterMoveId;
+      let changeListId = this.list.id;
+      axios
+        .post("/items/move", {
+          id: beforeMoveId,
+          to_id: afterMoveId,
+          list_id: changeListId,
+        })
+        .then((response) => {});
     },
     moveId: function (event) {
       this.moveOldIndex = event.oldIndex;

@@ -20,7 +20,10 @@ export default {
     return {
       showAdd: false,
       newName: "",
-      btnClass: this.addType == "リスト" ? "btn btn-outline-light d-flex align-self-center" : "btn btn-outline-info d-flex align-self-center",
+      btnClass:
+        this.addType == "リスト"
+          ? "btn btn-outline-light d-flex align-self-center"
+          : "btn btn-outline-info d-flex align-self-center",
     };
   },
   methods: {
