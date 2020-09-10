@@ -121,7 +121,7 @@ export default {
     },
     delList: function () {
       axios
-        .delete("/lists/destroy", { id: this.list.id })
+        .delete("/lists/destroy", { params: { id: this.list.id } })
         .then((res) => console.log(res));
     },
     moveItem: function (val, oldVal) {
