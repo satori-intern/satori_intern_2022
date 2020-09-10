@@ -18,8 +18,7 @@ class BoardsController < ApplicationController
     end
 
     def create
-        user = User.find(current_user.id)
-        user.boards.create(name: params[:name])
+        current_user.boards.create(name: params[:name])
         redirect_to :action => 'index'
     end
 
