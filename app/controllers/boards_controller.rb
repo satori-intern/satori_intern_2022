@@ -4,7 +4,13 @@ class BoardsController < ApplicationController
 
     # show boards list
     def index
-        @boards = Board.all
+        p current_user
+        assignments = Assignment
+            .where('`user_id` = ?', current_user.id)
+        @boards = []
+        assignments.each do |assignment|
+            @boards.push(Board.find(assignment.board_id))
+        end
     end
 
     # create board
