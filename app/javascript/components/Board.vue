@@ -53,6 +53,13 @@ export default {
     editFinish: function (itemInfo) {
       console.log(itemInfo)
       //api処理
+      axios
+        .put("/items/update", {
+          id: itemInfo.id,
+          name: itemInfo.name,
+          detail: itemInfo.detail,
+        })
+        .then((response) => {});
       this.modal = false
     },
     removeFinish: function (id, index) {
