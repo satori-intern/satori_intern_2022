@@ -13,24 +13,24 @@
 ActiveRecord::Schema.define(version: 2020_09_07_092336) do
 
   create_table "boards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.bigint "list_id"
-    t.bigint "index"
-    t.text "detail"
+    t.string "name", null: false
+    t.bigint "list_id", null: false
+    t.bigint "index", null: false
+    t.text "detail", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.bigint "board_id"
-    t.bigint "index"
+    t.string "name", null: false
+    t.bigint "board_id", null: false
+    t.bigint "index", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
