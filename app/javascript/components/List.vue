@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-body bg-light">
         <h4 class="card-title">{{title}}</h4>
-        <draggable v-model="list.items" :key="list.id" group="board" @start="moveId">
+        <draggable v-model="list.items" :key="list.id" group="board" @start="moveId" :options="{animation:500}">
             <div v-for="item in list.items" :key="item.id">
                 <Item :item-copy="item" />
             </div>
