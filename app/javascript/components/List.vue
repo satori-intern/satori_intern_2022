@@ -4,7 +4,7 @@
         <h4 class="card-title">{{title}}</h4>
         <draggable v-model="items" :key="listId" group="board" @start="moveId">
             <div v-for="item in items" :key="item.id">
-                <Item :item-item="item" />
+                <Item :item-item="item" @ItemToListInfo=ItemToListInfo />
             </div>
         </draggable>
         <button type="button" class="btn btn-outline-info d-flex align-self-center">
@@ -98,6 +98,14 @@ export default {
         moveId: function (event) {
             this.moveOldIndex = event.oldIndex;
         },
+        ItemToListInfo: function (itemInfo) {
+            this.$emit('ListToBoardInfo', itemInfo, this.title, this.listId)
+        },
+        removeItem: function (id) {
+            console.log(id)
+            console.log(this.items)
+            console.log(this.items.find((item) => item.id === id))
+        }
     },
 };
 </script>

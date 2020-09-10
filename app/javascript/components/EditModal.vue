@@ -1,17 +1,16 @@
 <template>
-  <transition name="modal" appear>
-    <div class="modal modal-overlay">
-      <!-- 周りをクリックしたら変更を破棄 -->
-      <div class="modal-window" @click.self="$emit('close')">
-        <div class="modal-contents">
-          <p id="list-name">リスト名</p>
-          <p id="task-tag">タスク</p>
-          <input type="text" v-model="item_value.name" class='edit form-control'>
-          <p id="explain-tag">説明</p>
-          <input type="text" v-model="item_value.detail" class='edit form-control'>
-          <button id="complete-button" class="btn btn-outline-dark btn-lg" @click.self="$emit('close')">完了</button>
-          <!-- <button id="remove-button" class="btn btn-danger btn-lg" @click="openRemoveModal()">削除</button> -->
-          <!-- <removeModal @close="closeRemoveModal" v-if="removeModal"></removeModal> -->
+  <transition name="modals" appear>
+    <div class="modals modals-overlay">
+      <div class="modals-window">
+        <div class="modals-content">
+            <p id="list-name">{{ listName }}</p>
+            <p id="task-tag">タスク</p>
+            <input type="text" v-model="EditItemInfo.name" class='edit form-control'>
+            <p id="explain-tag">説明</p>
+            <!-- <input type="text" v-model="EditItemInfo.detail" class='edit form-control'> -->
+            <textarea class="form-control" id="FormControlTextarea1" rows="3" v-model="EditItemInfo.detail"></textarea>
+            <button id="complete-button" class="btn btn-outline-dark btn-lg" @click="edit">完了</button>
+            <button id="remove-button" class="btn btn-danger btn-lg" @click="remove">削除</button>
         </div>
       </div>
     </div>
@@ -19,74 +18,77 @@
 </template>
 
 <script>
-// import removeModal from './removeModal.vue'
 export default {
   name: 'EditModal',
-  props: ['val'],
-//   components: { 
-//     removeModal
-//   },
+  props: ['itemInfo', 'listTitle', 'listId'],
   data() {
     return {
-      removeModal: false,
-      isRemove: false,
-      // 編集を保存しない時に使用
-      keep_item_value: this.val,
-      item_value: JSON.parse(JSON.stringify(this.val)),
+      EditItemInfo: JSON.parse(JSON.stringify(this.itemInfo)),
+      listName: this.listTitle,
+      listNum: this.listId
     }
   },
-  mounted : function(){
-    console.log(this.val)
-    // this.$emit('close')
-  },
   methods: {
-    openRemoveModal() {
-      this.removeModal = true
+    edit: function () {
+      this.itemInfo.name = this.EditItemInfo.name
+      this.itemInfo.detail = this.EditItemInfo.detail
+      console.log(this.itemInfo)
+      this.$emit('editFinish')
     },
-    closeRemoveModal(isRemove) {
-      this.removeModal = false
-      if (isRemove) {
-        this.$emit('close', this.keep_item_value, !this.isRemove)
-      }
-    },
+    remove: function () {
+      this.$emit('removeFinish', this.itemInfo.id, this.listNum)
+    }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.modal {
-  &.modal-overlay {
+.modals {
+  &.modals-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    z-index: 9998;
+    z-index: 30;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5);
-    display: table;
-    transition: opacity .3s ease;
+    background: rgba(0, 0, 0, 0.5);
   }
+
   &-window {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-  &-contents {
-    width: 80%;
-    max-width: 840px;
-    margin: 0 auto;
-    padding: 30px 2vw 40px;
-    border: 2px solid #aaa;
-    text-align: center;
     background: #fff;
-    box-sizing: border-box;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-    transition: all .3s ease;
+    border-radius: 4px;
+    overflow: hidden;
   }
-  &-footer {
-    background: #ccc;
-    padding: 10px;
-    text-align: right;
+
+  &-content {
+    padding: 10px 20px;
+  }
+}
+
+// オーバーレイのトランジション
+.modals-enter-active, .modals-leave-active {
+  transition: opacity 0.4s;
+
+  // オーバーレイに包含されているモーダルウィンドウのトランジション
+  .modals-window {
+    transition: opacity 0.4s, transform 0.4s;
+  }
+}
+
+// ディレイを付けるとモーダルウィンドウが消えた後にオーバーレイが消える
+.modals-leave-active {
+  transition: opacity 0.3s ease 0.2s;
+}
+
+.modals-enter, .modals-leave-to {
+  opacity: 0;
+
+  .modals-window {
+    opacity: 0;
+    transform: translateY(-20px);
   }
 }
 
@@ -119,10 +121,21 @@ export default {
   color: #000000;
   font-size: 15px;
   text-align: left;
-  padding: 0px;
+  padding: 5px;
+  margin-top: 7px;
+  margin-bottom: 16px;
+}
+
+#FormControlTextarea1 {
+  width: 100%;
+  color: #000000;
+  font-size: 15px;
+  text-align: left;
+  padding: 5px;
   margin-top: 7px;
   margin-bottom: 16px;
 }
 .btn {
   margin: 6px;
 }
+</style>

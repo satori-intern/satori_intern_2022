@@ -1,13 +1,12 @@
 <template>
   <div class="bg-info">
+    <EditModal :itemInfo="itemInfo" :listTitle="listTitle" :listId="listId" @editFinish="editFinish" @removeFinish="removeFinish" v-if="modal"></EditModal>
     <h3 class="text-light p-1">{{board.name}}</h3>
-    <!-- <button @click="openModal">開く</button>
-    <SampleModal @close="closeModal" v-if="modal"></SampleModal> -->
     <div class="container p-1">
       <div class="row">
         <draggable v-model="board.lists" group="lists" class="row">
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3">
-            <List :list-items="list.items" :list-title="list.name" :id="list.id" />
+            <List :list-items="list.items" :list-title="list.name" :id="list.id" @ListToBoardInfo=ListToBoardInfo ref="remove" />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <button type="button" class="btn btn-outline-light d-flex align-self-center">
@@ -24,13 +23,13 @@
 import List from "./List";
 import draggable from "vuedraggable";
 import axios from "axios";
-// import SampleModal from './SampleModal'
+import EditModal from './EditModal'
 export default {
   name: "Board",
   components: {
     List,
     draggable,
-    // SampleModal,
+    EditModal,
   },
   mounted() {
     this.boardId = location.pathname.split("/")[2]
@@ -41,18 +40,30 @@ export default {
   },
   data() {
     return {
-      // modal: false,
+      modal: false,
+      itemInfo: "",
+      listTitle: "",
+      listId: "",
       board: {},
       boardId: ""
     };
   },
   methods: {
-    openModal() {
-      this.modal = true
-    },
-    closeModal() {
+    editFinish: function () {
       this.modal = false
     },
+    removeFinish: function (id, listId) {
+      // console.log(listId)
+      // console.log(this.board.lists)
+      this.$refs.remove[listId].removeItem(id, listId)
+      this.modal = false
+    },
+    ListToBoardInfo: function (itemInfo, listTitle, listId) {
+      this.itemInfo = itemInfo
+      this.listTitle = listTitle
+      this.listId = listId
+      this.modal = true
+    }
   }
 };
 </script>
