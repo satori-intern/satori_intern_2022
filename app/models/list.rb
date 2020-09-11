@@ -3,5 +3,5 @@ class List < ApplicationRecord
     has_many :items, dependent: :destroy
 
     validates :board_id, numericality: true
-    validates :name, presence: true, length: { maximum: 255 }
+    validates :name, presence: true, allow_blank: true, length: { maximum: 255 }
 end
