@@ -101,7 +101,7 @@ export default {
       if (!this.showEditBtn) {
         axios
           .put("/lists/update", { id: this.list.id, name: this.title })
-          .then((res) => console.log(res));
+          .then((res) => {});
       }
     },
     addItem: function (newName) {
@@ -122,7 +122,6 @@ export default {
       axios
         .delete("/lists/destroy", { params: { id: this.list.id } })
         .then((res) => {
-          console.log(res);
           this.$emit("disList", this.list.id);
         });
     },

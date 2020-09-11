@@ -15,7 +15,7 @@
     <% @boards.each do |board| %>
       <tr>
         <td>
-          <%= link_to(board.name, "/boards/#{board.id}/show" ) %>
+          <%= link_to(board.name, "/boards/#{board.id}/show", data: {"turbolinks" => false} ) %>
         </td>
         <td class="button_td">
           <%= button_to("edit", "/boards/#{board.id}/edit", method: :get, class: "btn btn-primary") %>
