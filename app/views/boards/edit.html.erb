@@ -1,16 +1,18 @@
-<%= form_tag({controller: "boards", action: "update"},{method: :put}) do %>
-    <p>ボード名変更</p>
-    <%= label_tag(:name, "Board Name:") %>
-    <%= text_field_tag(:name, @board.name, maxlength: 255) %>
-    <%= submit_tag("Save") %>
-<% end %>
-<%= form_tag({controller: "boards", action: "share"}, {method: :put}) do %>
-    <p>ボードの共有</p>
-    <%= label_tag(:name, "email:") %>
-    <%= text_field_tag(:email) %>
-    <%= submit_tag("Save") %>
-<% end %>
-<div>
-<%= link_to("back", "/boards/index" ) %>
+<div class="container">
+    <%= form_tag({controller: "boards", action: "update"},{method: :put}) do %>
+        <p>ボード名変更</p>
+        <%= label_tag(:name, "Board Name:") %>
+        <%= text_field_tag(:name, @board.name, maxlength: 255, class: "form-control") %>
+        <%= submit_tag("Save", class: "btn btn-primary") %>
+    <% end %>
+    <%= form_tag({controller: "boards", action: "share"}, {method: :put}) do %>
+        <p>ボードの共有</p>
+        <%= label_tag(:name, "email:") %>
+        <%= text_field_tag(:email, '', class: "form-control") %>
+        <%= submit_tag("Save", class: "btn btn-primary") %>
+    <% end %>
+    <div>
+    <%= link_to("back", "/boards/index" ) %>
+    </div>
+    <%= yield %>
 </div>
-<%= yield %>
