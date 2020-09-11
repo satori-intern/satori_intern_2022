@@ -1,0 +1,26 @@
+<div class="user_email" style="background-color: pink;">
+  <h2><%= current_user.email %>のページ</h2>
+</div>
+
+<% @boards.each do |board| %>
+  <div>
+    <span>
+      <%= link_to(board.name, "/boards/#{board.id}/show" ) %>
+    </span>
+    <span>
+      <%= link_to("edit", "/boards/#{board.id}/edit" ) %>
+    </span>
+    <span>
+      <%= button_to("destroy", "/boards/#{board.id}/destroy", method: :delete) %>
+    </span>
+  </div>
+<% end %>
+<div>
+  <%= link_to("new", "/boards/new") %>
+</div>
+
+<div style="background-color: pink;">
+  <h2>ユーザーアカウント</h2>
+  <%= button_to '編集', edit_user_registration_path, method: :get %>
+  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+</div>

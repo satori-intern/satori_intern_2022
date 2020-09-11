@@ -1,0 +1,9 @@
+<h1>name: "<%= @board.name %>"</h1>
+<h1>id: "<%= @board.id %>"</h1>
+
+<% @board.assignments.each do |assignment| %>
+    <%= assignment.user.email %>
+<% end %>
+<div>
+    <%= link_to("back", "/boards/index" ) %>
+</div>
