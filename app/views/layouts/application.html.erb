@@ -11,6 +11,44 @@
   </head>
 
   <body>
+  <% if user_signed_in? %>
+  <!-- navbar-expandがないとドロップメニューで縦幅が広がっちゃう -->
+  <nav class="navbar navbar-expand navbar-light board-header shadow-sm">
+    <!--<a class="navbar-brand" href="#">something cool logo</a>-->
+    <!-- 左寄せと右寄せを作るためにmr-autoを1つ目だけ付与 -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link text-white" href="#">ボード選択</a>
+      </li>
+      <% if ["board", "show"].all? { |check_str| request.path.include?(check_str) } %>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="#">ボード編集</a>
+      </li>
+      <% end %>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <!-- aria-hashpopup ドロップメニューである, aria-expanded メニューが開いてるかどうか -->
+        <!-- idとaria-labelledbyで紐付け -->
+        <a
+          class="nav-link dropdown-toggle text-white"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >ユーザー</a>
+        <!-- 画面外に出ないようにdropdown-menu-rightを付与 : https://qiita.com/hmmrjn/items/6f5fd65ab8c58cd7a6d6 -->
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+          <%= link_to("ユーザー情報編集", edit_user_registration_path, method: :get, class: "dropdown-item text-info ") %>
+          <div class="dropdown-divider"></div>
+          <%= link_to("ログアウト", destroy_user_session_path, method: :delete, data: {confirm: "ログアウトしますか？"}, class: "dropdown-item text-info ") %>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <% end %>
     <% if notice.present? %>
       <p class="notice"><%= notice %></p>
     <% end %>
