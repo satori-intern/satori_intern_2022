@@ -1,9 +1,11 @@
-<%= form_tag(controller: "boards", action: "create", method: "post") do %>
-    <%= label_tag(:name, "Board Name:") %>
-    <%= text_field_tag(:name, maxlength: 255) %>
-    <%= submit_tag("Create") %>
-<% end %>
-<div>
-<%= link_to("back", "/boards/index" ) %>
+<div class="container">
+    <%= form_tag(controller: "boards", action: "create", method: "post") do %>
+        <%= label_tag(:name, "Board Name:") %>
+        <%= text_field_tag(:name, '', maxlength: 255, class: "form-control") %>
+        <%= submit_tag("Create", class: "btn btn-primary") %>
+    <% end %>
+    <div>
+    <%= link_to("back", "/boards/index" ) %>
+    </div>
+    <%= yield %>
 </div>
-<%= yield %>
