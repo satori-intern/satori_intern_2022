@@ -13,7 +13,7 @@
           @end="moveListId"
         >
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
-            <List :list-copy="list" @ListToBoardInfo=ListToBoardInfo ref="remove" />
+            <List :list-copy="list" @disList="disappearList" @ListToBoardInfo=ListToBoardInfo ref="remove" />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <AddBtn @catchNewName="addList" :add-type="addType" />
