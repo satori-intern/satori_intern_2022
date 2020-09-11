@@ -31,6 +31,24 @@ class BoardsController < ApplicationController
         redirect_to :action => 'index'
     end
 
+    def share
+        board = Board.find(params[:id])
+        user = User.find_by(email: params[:email])
+        unless user
+            flash[:alert] = "存在しないユーザです"
+            redirect_to :action => 'edit'
+            return
+        end
+
+        if board.users.where(id: user.id).any?
+            flash[:alert] = "すでに追加されているユーザです"
+            redirect_to :action => 'edit'
+        else
+            board.users << user
+            redirect_to :action => 'index'
+        end
+    end
+
     # destroy board
     def destroy
         board = Board.find(params[:id])

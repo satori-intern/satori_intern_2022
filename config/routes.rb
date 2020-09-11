@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   put    "boards/:id/update"  => "boards#update"
   delete "boards/:id/destroy" => "boards#destroy"
   get    "boards/:id/show"    => "boards#show"
+  put   "boards/:id/share"    => "boards#share"
 
   post "boards/get_board_data"=> "apis/boards#get_board_data"
 
