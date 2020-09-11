@@ -1,3 +1,7 @@
+<div class="user_email" style="background-color: pink;">
+  <h2><%= current_user.email %>のページ</h2>
+</div>
+
 <% @boards.each do |board| %>
   <div>
     <span>
@@ -17,5 +21,6 @@
 
 <div style="background-color: pink;">
   <h2>ユーザーアカウント</h2>
+  <%= button_to '編集', edit_user_registration_path, method: :get %>
   <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
 </div>

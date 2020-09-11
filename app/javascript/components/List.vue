@@ -38,7 +38,7 @@
         :options="{animation:500}"
       >
         <div v-for="item in list.items" :key="item.id">
-          <Item :item-copy="item" />
+          <Item :item-copy="item" @ItemToListInfo=ItemToListInfo />
         </div>
       </draggable>
       <AddBtn @catchNewName="addItem" :add-type="addType" />
@@ -173,6 +173,9 @@ export default {
     },
     moveId: function (event) {
       this.moveOldIndex = event.oldIndex;
+    },
+    ItemToListInfo: function (itemInfo) {
+      this.$emit('ListToBoardInfo', itemInfo, this.title, this.list.id)
     },
   },
 };
