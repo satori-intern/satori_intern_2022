@@ -167,4 +167,13 @@ export default {
 .card {
   margin-bottom: 10px;
 }
+
+div.container.p-1 {
+  width: 100%;
+}
+
+div.row {
+  width: 100%;
+  margin-left: 5px;
+}
 </style>
