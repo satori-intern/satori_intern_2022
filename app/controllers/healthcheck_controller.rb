@@ -1,5 +1,5 @@
-class HealthcheckController < ApplicationController
+class HealthcheckController < ApiController
     def healthcheck
-        render plain: "", status: :ok
+        response_success
     end
 end
