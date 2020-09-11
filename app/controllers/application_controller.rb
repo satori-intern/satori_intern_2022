@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     new_user_session_path
   end
+
+  def response_bad_request
+    render plain: '不正なリクエストです', status: 400
+end
 end
