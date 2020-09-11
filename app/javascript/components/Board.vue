@@ -164,10 +164,7 @@ export default {
   -ms-user-select: none;
   /* IE10かららしい */
 }
-
-@media only screen and (max-width: 768px) {
-  .box {
-    margin-bottom: 10px;
-  }
+.card {
+  margin-bottom: 10px;
 }
 </style>
