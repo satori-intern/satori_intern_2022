@@ -4,3 +4,6 @@
 <% @board.assignments.each do |assignment| %>
     <%= assignment.user.email %>
 <% end %>
+<div>
+    <%= link_to("back", "/boards/index" ) %>
+</div>

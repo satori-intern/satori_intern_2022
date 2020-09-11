@@ -45,6 +45,7 @@ class BoardsController < ApplicationController
             redirect_to :action => 'edit'
         else
             board.users << user
+            flash[:notice] = "共有に成功しました"
             redirect_to :action => 'index'
         end
     end
