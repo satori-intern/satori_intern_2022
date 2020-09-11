@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  get "static_pages/home"
   get "/healthcheck" => "healthcheck#healthcheck"
   
   # boards controller
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
   put    "boards/:id/update"  => "boards#update"
   delete "boards/:id/destroy" => "boards#destroy"
   get    "boards/:id/show"    => "boards#show"
+  put   "boards/:id/share"    => "boards#share"
 
   post "boards/get_board_data"=> "apis/boards#get_board_data"
 

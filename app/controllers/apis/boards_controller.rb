@@ -16,7 +16,13 @@ module Apis
                 list_tmp.store(:items, items.map{|item| item.slice(:id, :name, :detail)})
                 board_data[:lists].push(list_tmp)
             end
-            render json: board_data
+            response_success(board_data)
+        rescue ActiveRecord::NotNullViolation => e
+            response_bad_request(e)
+        rescue ActiveRecord::RecordInvalid => e
+            response_bad_request(e)
+        rescue ActiveRecord::RecordNotFound => e
+            response_not_found(e)
         end
     end
 end
