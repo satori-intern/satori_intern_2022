@@ -13,7 +13,7 @@
     </button>
     <div class="card-body bg-light">
       <div class="d-flex">
-        <h4 v-if="!showEditBtn" class="p-2 align-self-center w-100">{{title}}</h4>
+        <h4 v-if="!showEditBtn" class="p-2 align-self-center w-100">{{title | truncate}}</h4>
         <input
           v-model="title"
           v-if="showEditBtn"
@@ -30,13 +30,7 @@
           </button>
         </div>
       </div>
-      <draggable
-        v-model="list.items"
-        :key="list.id"
-        group="board"
-        @start="moveId"
-        :animation="500"
-      >
+      <draggable v-model="list.items" :key="list.id" group="board" @start="moveId" :animation="500">
         <div v-for="item in list.items" :key="item.id">
           <Item :item-copy="item" @ItemToListInfo="ItemToListInfo" />
         </div>
@@ -88,6 +82,16 @@ export default {
         deep: true,
       }
     );
+  },
+  filters: {
+    truncate: function (value) {
+      var length = 10;
+      var ommision = "...";
+      if (value.length <= length) {
+        return value;
+      }
+      return value.substring(0, length) + ommision;
+    },
   },
   methods: {
     hoverDelBtn: function () {
