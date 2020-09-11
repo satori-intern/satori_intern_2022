@@ -32,6 +32,7 @@ export default {
     },
     sendNewName: function () {
       this.$emit("catchNewName", this.newName);
+      this.newName = ""
     },
   },
   props: {
