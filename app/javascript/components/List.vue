@@ -13,7 +13,7 @@
     </button>
     <div class="card-body bg-light">
       <div class="d-flex">
-        <h4 v-if="!showEditBtn" class="p-2 align-self-center w-100">{{title}}</h4>
+        <h4 v-if="!showEditBtn" class="p-2 align-self-center w-75">{{title}}</h4>
         <input
           v-model="title"
           v-if="showEditBtn"

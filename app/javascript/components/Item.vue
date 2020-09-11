@@ -1,9 +1,9 @@
 <template>
   <div class="card">
-    <div class="d-flex">
-      <div class="p-2 align-self-center w-100">{{item.name}}</div>
-      <div class="p-2 flex-shrink-1">
-        <button type="button" class="btn btn-outline-info align-self-center" @click="modalBtn">
+    <div>
+      <div class="d-flex align-self-center float-left w-75"><p style="word-wrap:break-word;">{{item.name}}</p></div>
+      <div class="d-flex align-self-center float-right">
+        <button type="button" class="btn btn-outline-info" @click="modalBtn">
           <span class="material-icons">info</span>
         </button>
       </div>
