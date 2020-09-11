@@ -7,11 +7,13 @@ Rails.application.routes.draw do
   get    "boards/index"       => "boards#index"
   get    "boards/new"         => "boards#new"
   post   "boards/create"      => "boards#create"
-  get    "boards/:id/edit"    => "boards#edit"
+  #get    "boards/:id/edit"    => "boards#edit"
+  get    'boards/:id/edit', to: 'boards#edit', as: 'boards_edit'
   put    "boards/:id/update"  => "boards#update"
   delete "boards/:id/destroy" => "boards#destroy"
   get    "boards/:id/show"    => "boards#show"
-  put   "boards/:id/share"    => "boards#share"
+  put    "boards/:id/share"    => "boards#share"
+
 
   post "boards/get_board_data"=> "apis/boards#get_board_data"
 

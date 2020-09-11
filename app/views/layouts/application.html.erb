@@ -4,7 +4,6 @@
     <title>Intern2022</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -19,11 +18,17 @@
     <!-- 左寄せと右寄せを作るためにmr-autoを1つ目だけ付与 -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-      <%= link_to("ボード選択", boards_index_path, method: :get, class: "nav-link text-white") %>
+      <!--
+        <a class="nav-link text-white" href="#">ボード選択</a>
+      -->
+        <%= link_to('ボード選択', boards_index_url, {class: "nav-link text-white"}) %>
       </li>
       <% if ["board", "show"].all? { |check_str| request.path.include?(check_str) } %>
       <li class="nav-item">
-        <%= link_to("ボード編集", boards_create_path(@board), method: :get, class: "nav-link text-white") %>
+        <!--
+        <a class="nav-link text-white" href=<%= boards_edit_url(@board&.id) %> >ボード編集</a>
+        -->
+        <%= link_to('ボード編集', boards_edit_url(@board&.id), {class: "nav-link text-white"}) %>
       </li>
       <% end %>
     </ul>
