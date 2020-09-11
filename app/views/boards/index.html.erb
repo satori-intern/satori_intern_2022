@@ -1,26 +1,33 @@
+<style>
+  .content{
+    max-width: 700px;
+  }
+  .button_td{
+    width: 30px;
+  }
+</style>
 <div class="user_email" style="background-color: pink;">
   <h2><%= current_user.email %>のページ</h2>
 </div>
-
-<% @boards.each do |board| %>
+<div class="container">
+  <table class="table">
+    <tbody>
+    <% @boards.each do |board| %>
+      <tr>
+        <td>
+          <%= link_to(board.name, "/boards/#{board.id}/show" ) %>
+        </td>
+        <td class="button_td">
+          <%= button_to("edit", "/boards/#{board.id}/edit", method: :get, class: "btn btn-primary") %>
+        </td>
+        <td class="button_td">
+          <%= button_to("destroy", "/boards/#{board.id}/destroy", method: :delete, class: "btn btn-danger") %>
+        </td>
+      <tr>
+    <% end %>
+    <tbody>
+  </table>
   <div>
-    <span>
-      <%= link_to(board.name, "/boards/#{board.id}/show" ) %>
-    </span>
-    <span>
-      <%= link_to("edit", "/boards/#{board.id}/edit" ) %>
-    </span>
-    <span>
-      <%= button_to("destroy", "/boards/#{board.id}/destroy", method: :delete) %>
-    </span>
+    <%= button_to("new", "/boards/new", method: :get, class: "btn btn-primary") %>
   </div>
-<% end %>
-<div>
-  <%= link_to("new", "/boards/new") %>
-</div>
-
-<div style="background-color: pink;">
-  <h2>ユーザーアカウント</h2>
-  <%= button_to '編集', edit_user_registration_path, method: :get %>
-  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
 </div>
