@@ -18,11 +18,11 @@
     <!-- 左寄せと右寄せを作るためにmr-autoを1つ目だけ付与 -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">ボード選択</a>
+      <%= link_to("ボード選択", boards_index_path, method: :get, class: "nav-link text-white") %>
       </li>
       <% if ["board", "show"].all? { |check_str| request.path.include?(check_str) } %>
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">ボード編集</a>
+        <%= link_to("ボード編集", boards_create_path(@board), method: :get, class: "nav-link text-white") %>
       </li>
       <% end %>
     </ul>
