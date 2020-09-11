@@ -16,7 +16,7 @@ export default {
   name: "Item",
   methods: {
     modalBtn() {
-      this.showModal = this.showModal ? false : true;
+      this.$emit('ItemToListInfo', this.item)
     },
   },
   props: {
@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       item: this.itemCopy,
-      showModal: false,
     };
   },
 };

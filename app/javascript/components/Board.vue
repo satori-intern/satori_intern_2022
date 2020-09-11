@@ -1,5 +1,6 @@
 <template>
   <div class="bg-info">
+    <EditModal :itemInfo="itemInfo" :listTitle="listTitle" :listId="listId" @editFinish="editFinish" @removeFinish="removeFinish" v-if="modal"></EditModal>
     <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
       <div class="row a">
@@ -12,7 +13,7 @@
           @end="moveListId"
         >
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
-            <List :list-copy="list" />
+            <List :list-copy="list" @ListToBoardInfo=ListToBoardInfo ref="remove" />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <AddBtn @catchNewName="addList" :add-type="addType" />
@@ -28,6 +29,7 @@ import List from "./List";
 import AddBtn from "./AddBtn";
 import draggable from "vuedraggable";
 import axios from "axios";
+import EditModal from './EditModal'
 
 export default {
   name: "Board",
@@ -35,12 +37,17 @@ export default {
     List,
     draggable,
     AddBtn,
+    EditModal,
   },
   data() {
     return {
       board: {},
       boardId: "",
       addType: "リスト",
+      modal: false,
+      itemInfo: "",
+      listTitle: "",
+      listId: "",
     };
   },
   mounted() {
@@ -85,6 +92,39 @@ export default {
           //console.log(response);
         });
     },
+    editFinish: function (itemInfo) {
+      //api処理
+      axios
+        .put("/items/update", {
+          id: itemInfo.id,
+          name: itemInfo.name,
+          detail: itemInfo.detail,
+        })
+        .then((response) => {});
+      this.modal = false
+    },
+    removeFinish: function (itemId, listId) {
+      this.modal = false
+      this.board.lists.forEach(element => {
+        if (element.id === listId) {
+          element.items.splice(element.items.indexOf(element.items.find((item) => item.id === itemId)), 1)
+        }
+      });
+      //api処理
+      axios
+        .delete("/items/destroy", {
+          params: {
+            id: itemId,
+          }
+        })
+        .then((response) => {});
+    },
+    ListToBoardInfo: function (itemInfo, listTitle, listId) {
+      this.itemInfo = itemInfo
+      this.listTitle = listTitle
+      this.listId = listId
+      this.modal = true
+    }
   },
 };
 </script>
