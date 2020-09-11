@@ -70,7 +70,6 @@ export default {
       })
       .then((response) => {
         this.board = response.data;
-        console.log(response.data);
       });
   },
   methods: {
@@ -107,7 +106,6 @@ export default {
           to_id: bordIdBefore,
         })
         .then((response) => {
-          //console.log(response);
         });
     },
     editFinish: function (itemInfo) {
