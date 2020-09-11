@@ -62,7 +62,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # アカウント情報編集後のリダイレクト先の指定
   def after_update_path_for(resource)
-    static_pages_home_path
+    boards_index_path
   end
 
   def after_destroy_path_for(resource)
