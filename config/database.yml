@@ -27,5 +27,6 @@ production:
   <<: *default
   username: satoriadmin
   password: 4wVmecYq8i2mqhRv
+  host: prod-db1.satori.intern2020.private
   database: satori_intern_2022
 
