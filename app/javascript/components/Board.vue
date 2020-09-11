@@ -1,19 +1,31 @@
 <template>
   <div class="bg-info">
-    <EditModal :itemInfo="itemInfo" :listTitle="listTitle" :listId="listId" @editFinish="editFinish" @removeFinish="removeFinish" v-if="modal"></EditModal>
+    <EditModal
+      :itemInfo="itemInfo"
+      :listTitle="listTitle"
+      :listId="listId"
+      @editFinish="editFinish"
+      @removeFinish="removeFinish"
+      v-if="modal"
+    ></EditModal>
     <h3 class="text-light p-1">{{board.name}}</h3>
     <div class="container p-1">
       <div class="row a">
         <draggable
           v-model="board.lists"
           group="lists"
-          :options="{animation:500}"
+          :animation="500"
           class="row"
           draggable=".list"
           @end="moveListId"
         >
           <div v-for="list in board.lists" :key="list.id" class="col-12 col-md-4 col-lg-3 list">
-            <List :list-copy="list" @disList="disappearList" @ListToBoardInfo=ListToBoardInfo ref="remove" />
+            <List
+              :list-copy="list"
+              @disList="disappearList"
+              @ListToBoardInfo="ListToBoardInfo"
+              ref="remove"
+            />
           </div>
           <div class="col-12 col-md-4 col-lg-3">
             <AddBtn @catchNewName="addList" :add-type="addType" />
@@ -29,7 +41,7 @@ import List from "./List";
 import AddBtn from "./AddBtn";
 import draggable from "vuedraggable";
 import axios from "axios";
-import EditModal from './EditModal'
+import EditModal from "./EditModal";
 
 export default {
   name: "Board",
@@ -67,7 +79,10 @@ export default {
     },
     addList: function (newName) {
       const newItemId = axios
-        .post("/lists/create", { name: newName, board_id: this.boardId })
+        .post("/lists/create", {
+          name: newName,
+          board_id: this.boardId,
+        })
         .then((res) => res.data.id)
         .then((newListId) => {
           const newList = {
@@ -104,13 +119,18 @@ export default {
           detail: itemInfo.detail,
         })
         .then((response) => {});
-      this.modal = false
+      this.modal = false;
     },
     removeFinish: function (itemId, listId) {
-      this.modal = false
-      this.board.lists.forEach(element => {
+      this.modal = false;
+      this.board.lists.forEach((element) => {
         if (element.id === listId) {
-          element.items.splice(element.items.indexOf(element.items.find((item) => item.id === itemId)), 1)
+          element.items.splice(
+            element.items.indexOf(
+              element.items.find((item) => item.id === itemId)
+            ),
+            1
+          );
         }
       });
       //api処理
@@ -118,16 +138,16 @@ export default {
         .delete("/items/destroy", {
           params: {
             id: itemId,
-          }
+          },
         })
         .then((response) => {});
     },
     ListToBoardInfo: function (itemInfo, listTitle, listId) {
-      this.itemInfo = itemInfo
-      this.listTitle = listTitle
-      this.listId = listId
-      this.modal = true
-    }
+      this.itemInfo = itemInfo;
+      this.listTitle = listTitle;
+      this.listId = listId;
+      this.modal = true;
+    },
   },
 };
 </script>

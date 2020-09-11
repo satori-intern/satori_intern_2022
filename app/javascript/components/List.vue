@@ -35,10 +35,10 @@
         :key="list.id"
         group="board"
         @start="moveId"
-        :options="{animation:500}"
+        :animation="500"
       >
         <div v-for="item in list.items" :key="item.id">
-          <Item :item-copy="item" @ItemToListInfo=ItemToListInfo />
+          <Item :item-copy="item" @ItemToListInfo="ItemToListInfo" />
         </div>
       </draggable>
       <AddBtn @catchNewName="addItem" :add-type="addType" />
@@ -51,7 +51,6 @@ import Item from "./Item";
 import AddBtn from "./AddBtn";
 import axios from "axios";
 import draggable from "vuedraggable";
-
 export default {
   name: "List",
   components: {
@@ -123,8 +122,9 @@ export default {
       axios
         .delete("/lists/destroy", { params: { id: this.list.id } })
         .then((res) => {
-            console.log(res)
-            this.$emit("disList", this.list.id)});
+          console.log(res);
+          this.$emit("disList", this.list.id);
+        });
     },
     moveItem: function (val, oldVal) {
       const oldLists = oldVal[0];
@@ -175,7 +175,7 @@ export default {
       this.moveOldIndex = event.oldIndex;
     },
     ItemToListInfo: function (itemInfo) {
-      this.$emit('ListToBoardInfo', itemInfo, this.title, this.list.id)
+      this.$emit("ListToBoardInfo", itemInfo, this.title, this.list.id);
     },
   },
 };
